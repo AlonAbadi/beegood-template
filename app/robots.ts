@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
+import { CLIENT } from "@/lib/client";
 
-const BASE = process.env.NEXT_PUBLIC_APP_URL ?? "https://beegood.online";
+const BASE = process.env.NEXT_PUBLIC_APP_URL ?? `https://${CLIENT.domain}`;
 
 const DISALLOW = ["/admin", "/members", "/my", "/api/"];
 

@@ -10,15 +10,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@/lib/supabase/server";
 import { z } from "zod";
 import { PRODUCT_MAP } from "@/lib/products";
+import { CLIENT } from "@/lib/client";
 
-// Invoice description per product (more descriptive than the short UI name)
 const INVOICE_DESCRIPTIONS: Record<string, string> = {
-  challenge_197:  "אתגר 7 הימים - הדר דנן",
-  workshop_1080:  "סדנה יום אחד - הדר דנן",
-  course_1800:    "קורס דיגיטלי - הדר דנן",
-  strategy_4000:  "פגישת אסטרטגיה - הדר דנן",
-  premium_14000:  "יום צילום פרמיום - הדר דנן",
-  test_1:         "מוצר טסט - הדר דנן",
+  challenge_197:  `אתגר 7 הימים - ${CLIENT.name}`,
+  workshop_1080:  `סדנה יום אחד - ${CLIENT.name}`,
+  course_1800:    `קורס דיגיטלי - ${CLIENT.name}`,
+  strategy_4000:  `פגישת אסטרטגיה - ${CLIENT.name}`,
+  premium_14000:  `יום צילום פרמיום - ${CLIENT.name}`,
+  test_1:         `מוצר טסט - ${CLIENT.name}`,
 };
 
 const PRICES: Record<string, number> = {
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
 
   const { product, user_id } = body.data;
   const listPrice = PRICES[product];
-  const appUrl    = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.beegood.online";
+  const appUrl    = process.env.NEXT_PUBLIC_APP_URL ?? `https://${CLIENT.domain}`;
 
   const supabase = createServerClient();
 

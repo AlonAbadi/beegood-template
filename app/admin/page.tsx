@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { createServerClient } from '@/lib/supabase/server';
+import { CLIENT } from '@/lib/client';
 
 async function getHubKPIs() {
   const supabase = createServerClient();
@@ -153,7 +154,7 @@ export default async function AdminHubPage() {
       `}</style>
 
       <div className="hub-root">
-        <div className="hub-header">ניהול - הדר דנן</div>
+        <div className="hub-header">ניהול - {CLIENT.name}</div>
 
         <div className="hub-kpi-grid">
           {kpis.map((kpi) => (

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
+import { CLIENT } from '@/lib/client';
 
 // ── Design tokens ──────────────────────────────────────────────
 const BG         = '#080C14';
@@ -762,7 +763,7 @@ export default function ProductLandingPage({
           <div className="hadar-photo-wrap" style={{ width: 110, height: 110, borderRadius: '50%', overflow: 'hidden', border: 'none', background: 'transparent', flexShrink: 0 }}>
             {whoPhotoSrc
               ? <img src={whoPhotoSrc} alt={whoName} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              : <Image src="/hadarprotrait.png" alt="הדר דנן" width={220} height={220} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              : <Image src={CLIENT.about.image} alt={CLIENT.name} width={220} height={220} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             }
           </div>
           <div style={{ flex: 1 }}>
@@ -939,7 +940,7 @@ export default function ProductLandingPage({
 
       {/* ── Footer ──────────────────────────────────────────────── */}
       <div className="lp-footer">
-        <div className="lp-footer-logo">הדר דנן</div>
+        <div className="lp-footer-logo">{CLIENT.name}</div>
         <div className="lp-footer-signal">
           אנחנו לא יוצרים תוכן. אנחנו בונים את האות שלך. | <span dir="ltr">TrueSignal©</span>
         </div>
@@ -950,7 +951,7 @@ export default function ProductLandingPage({
           <a href="/accessibility">נגישות</a>
         </div>
         <div className="lp-footer-company">
-          © 2026 הדר דנן בע״מ | ח.פ. 516791555
+          © 2026 {CLIENT.legal_name} | ח.פ. {CLIENT.company_id}
         </div>
         <div className="lp-footer-company">
           החילזון 5, רמת גן | 053-9566961

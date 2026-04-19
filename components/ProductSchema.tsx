@@ -1,4 +1,6 @@
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://beegood.online";
+import { CLIENT } from "@/lib/client";
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? `https://${CLIENT.domain}`;
 
 const PROVIDER = {
   "@type": "Organization",
@@ -8,7 +10,7 @@ const PROVIDER = {
 
 const INSTRUCTOR = {
   "@type": "Person",
-  "name": "הדר דנן",
+  "name": CLIENT.name,
   "url": APP_URL,
 };
 

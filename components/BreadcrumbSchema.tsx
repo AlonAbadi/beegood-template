@@ -1,4 +1,5 @@
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://beegood.online";
+import { CLIENT } from "@/lib/client";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? `https://${CLIENT.domain}`;
 
 type Crumb = { name: string; url: string };
 

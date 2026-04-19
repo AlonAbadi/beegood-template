@@ -1,5 +1,7 @@
 "use client";
 
+import { CLIENT } from "@/lib/client";
+
 interface ConsentCheckboxProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
@@ -22,7 +24,7 @@ export function ConsentCheckbox({ checked, onChange, error, dark = false }: Cons
           className="text-xs leading-relaxed"
           style={{ color: "#9E9990" }}
         >
-          אני מאשר/ת קבלת עדכונים, מבצעים ותוכן שיווקי מהדר דנן בע״מ באמצעות אימייל, SMS ווואטסאפ. ניתן לבטל בכל עת.
+          {`אני מאשר/ת קבלת עדכונים, מבצעים ותוכן שיווקי מ${CLIENT.legal_name} באמצעות אימייל, SMS ווואטסאפ. ניתן לבטל בכל עת.`}
         </span>
       </label>
       {error && (

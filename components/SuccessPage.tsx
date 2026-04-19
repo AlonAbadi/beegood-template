@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { CLIENT } from "@/lib/client";
 
 interface SuccessPageProps {
   productName: string;
@@ -171,8 +172,8 @@ export function SuccessPage({
         {/* Footer note */}
         <p className="text-xs text-center" style={{ color: "rgba(158,153,144,0.6)" }}>
           שלחנו אליך מייל עם כל הפרטים. לשאלות:{" "}
-          <a href="mailto:hadar@beegood.online" className="underline hover:opacity-80">
-            hadar@beegood.online
+          <a href={`mailto:${CLIENT.email.from_email}`} className="underline hover:opacity-80">
+            {CLIENT.email.from_email}
           </a>
         </p>
       </div>
