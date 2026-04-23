@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 
 export default async function TrainingPage() {
   const viewCount = await getTrainingViewCount();
+  const pg        = CLIENT.pages.training;
 
   return (
     <ProductLandingPage
@@ -20,10 +21,8 @@ export default async function TrainingPage() {
       price={0}
       checkoutHref="#cta"
 
-      // TODO: set real vimeo_id in CLIENT.products.training.vimeo_id
       vimeoId={CLIENT.products.training.vimeo_id || undefined}
 
-      // TODO: replace all text below with real client copy
       headline={<><em>{CLIENT.products.training.title}</em></>}
       heroSub={CLIENT.products.training.description}
       stats={[
@@ -32,22 +31,14 @@ export default async function TrainingPage() {
         { val: <TrainingViewCounter initialCount={viewCount} />, label: "צפו" },
       ]}
 
-      problemItems={[
-        { icon: "🔸", text: "TODO: בעיה ראשונה שהלקוח מזדהה איתה" },
-        { icon: "🔸", text: "TODO: בעיה שנייה" },
-        { icon: "🔸", text: "TODO: בעיה שלישית" },
-      ]}
-      agitationText="TODO: משפט אגיטציה — מה גורם לבעיה להיות חמורה יותר?"
+      problemItems={pg.pain_points.map(t => ({ icon: "🔸", text: t }))}
+      agitationText={pg.agitation}
 
-      solutionTitle="TODO: מה לומדים בהדרכה?"
-      solutionItems={[
-        { num: "1", title: "TODO: נושא ראשון", desc: "TODO" },
-        { num: "2", title: "TODO: נושא שני",   desc: "TODO" },
-        { num: "3", title: "TODO: נושא שלישי", desc: "TODO" },
-      ]}
+      solutionTitle={pg.solution_title}
+      solutionItems={pg.steps.map(s => ({ num: s.num, title: s.title, desc: s.desc }))}
 
-      notForItems={["TODO: למי לא מתאים"]}
-      forItems={["TODO: למי מתאים"]}
+      notForItems={[...pg.not_for]}
+      forItems={[...pg.for_who]}
 
       whoName={CLIENT.name}
       whoRole={CLIENT.about.tagline}
@@ -57,10 +48,7 @@ export default async function TrainingPage() {
         { val: CLIENT.social_proof.stat1.number, label: CLIENT.social_proof.stat1.label },
         { val: CLIENT.social_proof.stat2.number, label: CLIENT.social_proof.stat2.label },
       ]}
-      testimonials={[
-        { text: "TODO: עדות ראשונה", author: "שם", role: "תפקיד" },
-        { text: "TODO: עדות שנייה",  author: "שם", role: "תפקיד" },
-      ]}
+      testimonials={pg.testimonials.map(t => ({ text: t.text, author: t.author, role: t.role }))}
 
       faqs={[
         { q: "האם זה באמת חינם?",        a: "כן. ללא תשלום עכשיו ואחר כך." },
@@ -68,7 +56,7 @@ export default async function TrainingPage() {
         { q: "מה קורה אחרי ההדרכה?",     a: "ממשיכים לשלב הבא בקצב שלך. אין לחץ." },
       ]}
 
-      finalTitle="TODO: כותרת סיום"
+      finalTitle={pg.final_title}
       finalSub="20 דקות. חינם לגמרי. ללא התחייבות."
 
       hideMicroCommitment

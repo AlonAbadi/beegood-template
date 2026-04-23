@@ -10,13 +10,14 @@ export const metadata: Metadata = {
 };
 
 export default function HivePage() {
+  const pg = CLIENT.pages.hive;
+
   return (
     <ProductLandingPage
       productName={CLIENT.products.hive.title}
       price={CLIENT.products.hive.price_basic}
       checkoutHref="#cta"
 
-      // TODO: replace all text below with real client copy
       headline={<><em>{CLIENT.products.hive.title}</em></>}
       heroSub={CLIENT.products.hive.description}
       stats={[
@@ -25,22 +26,14 @@ export default function HivePage() {
         { val: "0",   label: "התחייבות" },
       ]}
 
-      problemItems={[
-        { icon: "🔸", text: "TODO: בעיה ראשונה" },
-        { icon: "🔸", text: "TODO: בעיה שנייה" },
-        { icon: "🔸", text: "TODO: בעיה שלישית" },
-      ]}
-      agitationText="TODO: משפט אגיטציה"
+      problemItems={pg.pain_points.map(t => ({ icon: "🔸", text: t }))}
+      agitationText={pg.agitation}
 
-      solutionTitle="מה כולל המנוי?"
-      solutionItems={[
-        { num: "1", title: "TODO: רכיב ראשון", desc: "TODO" },
-        { num: "2", title: "TODO: רכיב שני",   desc: "TODO" },
-        { num: "3", title: "TODO: רכיב שלישי", desc: "TODO" },
-      ]}
+      solutionTitle={pg.solution_title}
+      solutionItems={pg.steps.map(s => ({ num: s.num, title: s.title, desc: s.desc }))}
 
-      notForItems={["TODO: למי לא מתאים"]}
-      forItems={["TODO: למי מתאים"]}
+      notForItems={[...pg.not_for]}
+      forItems={[...pg.for_who]}
 
       whoName={CLIENT.name}
       whoRole={CLIENT.about.tagline}
@@ -51,18 +44,11 @@ export default function HivePage() {
         { val: CLIENT.social_proof.stat2.number, label: CLIENT.social_proof.stat2.label },
         { val: CLIENT.social_proof.stat3.number, label: CLIENT.social_proof.stat3.label },
       ]}
-      testimonials={[
-        { text: "TODO: עדות ראשונה", author: "שם", role: "תפקיד" },
-        { text: "TODO: עדות שנייה",  author: "שם", role: "תפקיד" },
-      ]}
+      testimonials={pg.testimonials.map(t => ({ text: t.text, author: t.author, role: t.role }))}
 
-      faqs={[
-        { q: "איך מבטלים את המנוי?",             a: "בכל עת — דרך האזור האישי (/my) או בוואטסאפ. ביטול תוך 14 ימים = החזר מלא." },
-        { q: "האם יש התחייבות מינימלית?",         a: "לא. ניתן לביטול בכל עת ללא עלות." },
-        { q: "TODO: שאלה נוספת?",                 a: "TODO: תשובה" },
-      ]}
+      faqs={pg.faqs.map(f => ({ q: f.q, a: f.a }))}
 
-      finalTitle="TODO: כותרת סיום"
+      finalTitle={pg.final_title}
       finalSub="ניתן לביטול בכל עת."
 
       hideMicroCommitment

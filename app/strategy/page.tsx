@@ -6,14 +6,6 @@ import { FAQSchema } from "@/components/FAQSchema";
 import { BreadcrumbSchema } from "@/components/BreadcrumbSchema";
 import { CLIENT } from "@/lib/client";
 
-// TODO: replace with real client FAQs
-const STRATEGY_FAQS = [
-  { question: "מה כולל המפגש?",          answer: "TODO: תשובה אמיתית" },
-  { question: "למי זה מתאים?",           answer: "TODO: תשובה אמיתית" },
-  { question: "איך מתקיים המפגש?",       answer: "TODO: תשובה אמיתית" },
-  { question: "מה מדיניות ביטול?",       answer: "TODO: תשובה אמיתית" },
-];
-
 export const metadata: Metadata = {
   title: `${CLIENT.products.strategy.title} | ${CLIENT.name}`,
   description: CLIENT.products.strategy.description,
@@ -24,6 +16,9 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? `https://${CLIENT.domain}`;
 
 export default async function StrategyPage() {
   const price = String(PRODUCT_MAP.strategy_4000.price);
+  const pg    = CLIENT.pages.strategy;
+
+  const faqItems = pg.faqs.map(f => ({ question: f.q, answer: f.a }));
 
   return (
     <>
@@ -35,7 +30,7 @@ export default async function StrategyPage() {
         price={CLIENT.products.strategy.price}
         imageUrl={`${APP_URL}${CLIENT.products.strategy.image}`}
       />
-      <FAQSchema items={STRATEGY_FAQS} />
+      <FAQSchema items={faqItems} />
       <BreadcrumbSchema crumbs={[
         { name: "דף הבית", url: APP_URL },
         { name: CLIENT.products.strategy.title, url: `${APP_URL}/strategy` },
@@ -45,7 +40,6 @@ export default async function StrategyPage() {
         price={PRODUCT_MAP.strategy_4000.price}
         checkoutHref="#cta"
 
-        // TODO: replace all text below with real client copy
         headline={<><em>{CLIENT.products.strategy.title}</em></>}
         heroSub={CLIENT.products.strategy.description}
         stats={[
@@ -54,22 +48,14 @@ export default async function StrategyPage() {
           { val: "100%", label: "ערבות" },
         ]}
 
-        problemItems={[
-          { icon: "🔸", text: "TODO: בעיה ראשונה" },
-          { icon: "🔸", text: "TODO: בעיה שנייה" },
-          { icon: "🔸", text: "TODO: בעיה שלישית" },
-        ]}
-        agitationText="TODO: משפט אגיטציה"
+        problemItems={pg.pain_points.map(t => ({ icon: "🔸", text: t }))}
+        agitationText={pg.agitation}
 
-        solutionTitle="TODO: מה מקבלים בפגישה?"
-        solutionItems={[
-          { num: "1", title: "TODO: נושא ראשון", desc: "TODO" },
-          { num: "2", title: "TODO: נושא שני",   desc: "TODO" },
-          { num: "3", title: "TODO: נושא שלישי", desc: "TODO" },
-        ]}
+        solutionTitle={pg.solution_title}
+        solutionItems={pg.steps.map(s => ({ num: s.num, title: s.title, desc: s.desc }))}
 
-        notForItems={["TODO: למי לא מתאים"]}
-        forItems={["TODO: למי מתאים"]}
+        notForItems={[...pg.not_for]}
+        forItems={[...pg.for_who]}
 
         whoName={CLIENT.name}
         whoRole={CLIENT.about.tagline}
@@ -79,16 +65,13 @@ export default async function StrategyPage() {
           { val: CLIENT.social_proof.stat1.number, label: CLIENT.social_proof.stat1.label },
           { val: CLIENT.social_proof.stat2.number, label: CLIENT.social_proof.stat2.label },
         ]}
-        testimonials={[
-          { text: "TODO: עדות ראשונה", author: "שם", role: "תפקיד" },
-          { text: "TODO: עדות שנייה",  author: "שם", role: "תפקיד" },
-        ]}
+        testimonials={pg.testimonials.map(t => ({ text: t.text, author: t.author, role: t.role }))}
 
         faqSectionTitle="שאלות נפוצות"
-        faqs={STRATEGY_FAQS.map(f => ({ q: f.question, a: f.answer }))}
+        faqs={pg.faqs.map(f => ({ q: f.q, a: f.a }))}
 
-        finalTitle="TODO: כותרת סיום"
-        finalSub="TODO: תת-כותרת סיום"
+        finalTitle={pg.final_title}
+        finalSub={pg.final_sub}
       />
     </>
   );

@@ -10,14 +10,6 @@ import { FAQSchema } from "@/components/FAQSchema";
 import { BreadcrumbSchema } from "@/components/BreadcrumbSchema";
 import { CLIENT } from "@/lib/client";
 
-// TODO: replace with real client FAQs
-const WORKSHOP_FAQS = [
-  { question: "מה כולל הסדנה?",           answer: "TODO: תשובה אמיתית" },
-  { question: "למי מתאים?",               answer: "TODO: תשובה אמיתית" },
-  { question: "כמה זמן נמשכת הסדנה?",    answer: "TODO: תשובה אמיתית" },
-  { question: "מה מדיניות ביטול?",        answer: "TODO: תשובה אמיתית" },
-];
-
 export const metadata: Metadata = {
   title: `${CLIENT.products.workshop.title} | ${CLIENT.name}`,
   description: CLIENT.products.workshop.description,
@@ -30,6 +22,9 @@ export default async function WorkshopPage({ searchParams }: { searchParams: Pro
   const { email = "" } = await searchParams;
   const price  = String(PRODUCT_MAP.workshop_1080.price);
   const credit = email ? await getUserCredit(email) : 0;
+  const pg     = CLIENT.pages.workshop;
+
+  const faqItems = pg.faqs.map(f => ({ question: f.q, answer: f.a }));
 
   return (
     <>
@@ -41,7 +36,7 @@ export default async function WorkshopPage({ searchParams }: { searchParams: Pro
         price={CLIENT.products.workshop.price}
         imageUrl={`${APP_URL}${CLIENT.products.workshop.image}`}
       />
-      <FAQSchema items={WORKSHOP_FAQS} />
+      <FAQSchema items={faqItems} />
       <BreadcrumbSchema crumbs={[
         { name: "דף הבית", url: APP_URL },
         { name: CLIENT.products.workshop.title, url: `${APP_URL}/workshop` },
@@ -52,7 +47,6 @@ export default async function WorkshopPage({ searchParams }: { searchParams: Pro
         price={PRODUCT_MAP.workshop_1080.price}
         checkoutHref="#cta"
 
-        // TODO: replace all text below with real client copy
         headline={<><em>{CLIENT.products.workshop.title}</em></>}
         heroSub={CLIENT.products.workshop.description}
         stats={[
@@ -61,22 +55,14 @@ export default async function WorkshopPage({ searchParams }: { searchParams: Pro
           { val: CLIENT.social_proof.stat1.number, label: CLIENT.social_proof.stat1.label },
         ]}
 
-        problemItems={[
-          { icon: "🔸", text: "TODO: בעיה ראשונה" },
-          { icon: "🔸", text: "TODO: בעיה שנייה" },
-          { icon: "🔸", text: "TODO: בעיה שלישית" },
-        ]}
-        agitationText="TODO: משפט אגיטציה"
+        problemItems={pg.pain_points.map(t => ({ icon: "🔸", text: t }))}
+        agitationText={pg.agitation}
 
-        solutionTitle="TODO: מה לומדים בסדנה?"
-        solutionItems={[
-          { num: "1", title: "TODO: נושא ראשון", desc: "TODO" },
-          { num: "2", title: "TODO: נושא שני",   desc: "TODO" },
-          { num: "3", title: "TODO: נושא שלישי", desc: "TODO" },
-        ]}
+        solutionTitle={pg.solution_title}
+        solutionItems={pg.steps.map(s => ({ num: s.num, title: s.title, desc: s.desc }))}
 
-        notForItems={["TODO: למי לא מתאים"]}
-        forItems={["TODO: למי מתאים"]}
+        notForItems={[...pg.not_for]}
+        forItems={[...pg.for_who]}
 
         whoName={CLIENT.name}
         whoRole={CLIENT.about.tagline}
@@ -87,18 +73,15 @@ export default async function WorkshopPage({ searchParams }: { searchParams: Pro
           { val: CLIENT.social_proof.stat2.number, label: CLIENT.social_proof.stat2.label },
           { val: CLIENT.social_proof.stat3.number, label: CLIENT.social_proof.stat3.label },
         ]}
-        testimonials={[
-          { text: "TODO: עדות ראשונה", author: "שם", role: "תפקיד" },
-          { text: "TODO: עדות שנייה",  author: "שם", role: "תפקיד" },
-        ]}
+        testimonials={pg.testimonials.map(t => ({ text: t.text, author: t.author, role: t.role }))}
 
         creditNote={credit > 0 ? `יש לך זיכוי של ${credit} ש״ח מרכישות קודמות` : undefined}
 
         faqSectionTitle="שאלות נפוצות"
-        faqs={WORKSHOP_FAQS.map(f => ({ q: f.question, a: f.answer }))}
+        faqs={pg.faqs.map(f => ({ q: f.q, a: f.a }))}
 
-        finalTitle="TODO: כותרת סיום"
-        finalSub="TODO: תת-כותרת סיום"
+        finalTitle={pg.final_title}
+        finalSub={pg.final_sub}
 
         ctaSlot={
           <CreditBanner credit={credit} listPrice={PRODUCT_MAP.workshop_1080.price} productName={CLIENT.products.workshop.title} dark />

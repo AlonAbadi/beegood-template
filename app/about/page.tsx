@@ -17,17 +17,9 @@ const personSchema = {
   "url": APP_URL,
   "jobTitle": CLIENT.about.tagline,
   "description": CLIENT.about.body,
-  // TODO: add social media URLs
   "sameAs": [],
   "worksFor": { "@type": "Organization", "name": CLIENT.legal_name, "url": APP_URL },
 };
-
-// TODO: replace these principles with real client values/philosophy
-const PRINCIPLES = [
-  { n: "1", q: '"TODO: עקרון ראשון?"', body: "TODO: הסבר קצר על העקרון הראשון של הלקוח." },
-  { n: "2", q: '"TODO: עקרון שני?"',   body: "TODO: הסבר קצר על העקרון השני." },
-  { n: "3", q: '"TODO: עקרון שלישי?"', body: "TODO: הסבר קצר על העקרון השלישי." },
-];
 
 const BG   = CLIENT.colors.bg;
 const FG   = CLIENT.colors.fg;
@@ -73,10 +65,10 @@ export default function AboutPage() {
       {/* Principles */}
       <section style={{ maxWidth: 640, margin: "0 auto", padding: "48px 20px" }}>
         <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 24 }}>
-          TODO: כותרת הסעיף — הגישה / הפילוסופיה
+          {CLIENT.pages.about.section_title}
         </h2>
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          {PRINCIPLES.map((p) => (
+          {CLIENT.pages.about.principles.map((p) => (
             <div key={p.n} style={{ background: CARD, border: `1px solid ${BDR}`, borderRadius: 12, padding: 20 }}>
               <p style={{ fontSize: 13, color: ACC, fontWeight: 700, marginBottom: 8 }}>עקרון {p.n}</p>
               <p style={{ fontSize: 17, fontWeight: 700, marginBottom: 8 }}>{p.q}</p>
@@ -89,7 +81,7 @@ export default function AboutPage() {
       {/* Sign-off */}
       <section style={{ maxWidth: 480, margin: "0 auto", padding: "0 20px 64px", textAlign: "center" }}>
         <p style={{ fontSize: 18, fontStyle: "italic", color: MUT, lineHeight: 1.7 }}>
-          &ldquo;TODO: ציטוט חותם — משפט אחד שמסכם את הגישה של הלקוח.&rdquo;
+          &ldquo;{CLIENT.pages.about.quote}&rdquo;
         </p>
         <p style={{ marginTop: 16, fontWeight: 700, color: FG }}>— {CLIENT.name}</p>
       </section>
