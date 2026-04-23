@@ -66,9 +66,12 @@ export async function middleware(request: NextRequest) {
     },
   });
 
+  // In preview deployments there are no real users — skip the network call.
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = process.env.PREVIEW_MODE === "true"
+    ? { data: { user: null } }
+    : await supabase.auth.getUser();
 
   // ── Custom cookies (set on the final response) ───────────────
 

@@ -48,6 +48,10 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  if (process.env.PREVIEW_MODE === "true") {
+    return NextResponse.json({ preview: true, url: null });
+  }
+
   const terminal = process.env.CARDCOM_TERMINAL;
   const apiName  = process.env.CARDCOM_API_NAME;
 
