@@ -50,11 +50,7 @@ export default async function TrainingPage() {
       ]}
       testimonials={pg.testimonials.map(t => ({ text: t.text, author: t.author, role: t.role }))}
 
-      faqs={[
-        { q: "האם זה באמת חינם?",        a: "כן. ללא תשלום עכשיו ואחר כך." },
-        { q: "כמה זמן ההדרכה?",           a: "20 דקות. בקצב שלך." },
-        { q: "מה קורה אחרי ההדרכה?",     a: "ממשיכים לשלב הבא בקצב שלך. אין לחץ." },
-      ]}
+      faqs={pg.faqs.map(f => ({ q: f.q, a: f.a }))}
 
       finalTitle={pg.final_title}
       finalSub="20 דקות. חינם לגמרי. ללא התחייבות."

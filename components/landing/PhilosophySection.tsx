@@ -3,24 +3,15 @@
 import { useRef, useState } from "react";
 import { Compass, Flame, TrendingUp } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { CLIENT } from "@/lib/client";
 
-const PRINCIPLES: { icon: LucideIcon; title: string; body: string }[] = [
-  {
-    icon: Compass,
-    title: "אסטרטגיה קודם",
-    body: "לפני סרטון אחד - מבינים מי אתה, מה אתה מוכר, ולמה הקהל שלך צריך דווקא אותך",
-  },
-  {
-    icon: Flame,
-    title: "תוכן שמגיע מבפנים",
-    body: "לא תסריטים. לא טרנדים. תוכן שמגיע מהמקום האמיתי שלך - וזה מה שגורם לו לעבוד",
-  },
-  {
-    icon: TrendingUp,
-    title: "מכירות שמגיעות מאליהן",
-    body: "כשה־Signal נכון - הלקוחות הנכונים מזהים אותך. אתה לא צריך לשכנע, רק להיות נראה",
-  },
-];
+const ICONS: LucideIcon[] = [Compass, Flame, TrendingUp];
+
+const PRINCIPLES = CLIENT.pages.about.principles.map((p, i) => ({
+  icon:  ICONS[i] ?? Compass,
+  title: p.q.replace(/^["״]|["״]$/g, ""),
+  body:  p.body,
+}));
 
 function Card({ p, snap }: { p: typeof PRINCIPLES[number]; snap?: boolean }) {
   const Icon = p.icon;
